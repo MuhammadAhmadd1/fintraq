@@ -1,37 +1,16 @@
-import 'package:fintraq/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-// POST: https://fintraq.vercel.app/api/v1/auth/signup
-/**
- * 
- * {
- *  "email": "sadf",
- *  "firstName": "asdf",
- *  "lastName": "dsf",
- *  "password": "asdfasdf"
- * }
- * 
- * 201
- * 
- * cookies Response = session_token
- */
-
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  void signUserIn() {}
-  void signInGitHub() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +22,15 @@ class _LoginPageState extends State<LoginPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  PreferredSize(
+                    preferredSize: const Size.fromHeight(30.0),
+                    child: AppBar(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
                   const Text(
-                    'Create Account',
+                    'Sign in',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -53,78 +38,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Enter Your Information below to create account',
+                    'Enter Your email and password to sign in',
                     style: TextStyle(
                         fontSize: 17, color: Colors.blueGrey.shade200),
                     textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'First Name',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            TextField(
-                              controller: _firstNameController,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Colors.transparent,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                hintText: 'doe',
-                                hintStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              cursorColor: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10), // Spacing between the fields
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Last Name',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            TextField(
-                              controller: _lastNameController,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Colors.transparent,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                hintText: 'Doe',
-                                hintStyle: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              cursorColor: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                   const SizedBox(height: 30),
                   Container(
@@ -186,20 +103,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      String firstName = _firstNameController.text
-                          .trim(); //If the string contains leading or trailing whitespace, a new string with no leading and no trailing whitespace is returned
-                      String lastName = _lastNameController.text.trim();
                       String email = _emailController.text.trim();
                       String password = _passwordController.text.trim();
 
-                      if (firstName.isEmpty ||
-                          lastName.isEmpty ||
-                          email.isEmpty ||
-                          password.isEmpty) {
+                      if (email.isEmpty || password.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text(
-                                'Please enter the missing Credential!'),
+                            content:
+                                Text('Please enter the missing Credential!'),
                           ),
                         );
                         return;
@@ -256,45 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     icon: const Icon(LucideIcons.github),
                   ),
-                  //Divider
-                  const SizedBox(height: 10),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'OR',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignInPage(),
-                    ),
-                  );},
-                    child: const Text(
-                      'Already have an account? Sign in',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 140),
                 ],
               ),
             ),
